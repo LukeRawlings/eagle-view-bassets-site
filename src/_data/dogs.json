@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Dottie",
+    "sex": "female",
+    "breeding": "100% European Basset",
+    "blurb": "Dottie is friendly and sociable, though she might be a little shy at first.",
+    "image": "/assets/dogs/dottie.jpg"
+  },
+  {
+    "name": "Bonnie",
+    "sex": "female",
+    "breeding": "50/50 American/Brazilian Basset",
+    "blurb": "Bonnie is very sweet and loves people once she gets to know you.",
+    "image": "/assets/dogs/bonnie.jpg"
+  },
+  {
+    "name": "Betsie",
+    "sex": "female",
+    "breeding": "50/50 American/European Basset",
+    "blurb": "Betsie wants to be your immediate best friend.",
+    "image": "/assets/dogs/betsie.jpg"
+  },
+  {
+    "name": "Tucker",
+    "sex": "male",
+    "breeding": "100% European Basset",
+    "blurb": "Tucker is still a young boy but he's growing into a big European Basset. He's our spoiled house dog who loves walks, treats, and time with the family.",
+    "image": "/assets/dogs/tucker.jpg"
+  }
+]

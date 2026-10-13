@@ -1,0 +1,8 @@
+# Netlify auto-detects Eleventy (build: eleventy, publish: _site).
+# These settings are written out explicitly so the config is not a mystery.
+[build]
+  command = "npm run build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "24"

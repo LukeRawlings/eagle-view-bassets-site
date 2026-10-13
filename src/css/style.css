@@ -1,0 +1,950 @@
+/* ==========================================================================
+   Eagle View Bassets
+   Palette 2 — sampled from the bald-eagle logo photo (logo/bald-eagle-2/).
+   Defined in 2026-notes/260829-basset-hound-website-color-palette/
+   eagle-view-bassets-palette-2.codex.html
+
+     Eagle Gold       #B57C2A  accent, CTAs, badges, rules
+     Feather Charcoal #2E2825  body text, headings
+     Head White       #F9F7F5  page background, text on dark
+     Evergreen        #2F5B44  sections, links, nature theme  (chosen complement)
+     Sun Gold         #D8A75A  hover, gold on dark
+     Wing Brown       #79614A  secondary text, borders, captions
+     Tail Cream       #EFDDBF  borders, dividers, surfaces
+     Head Shadow      #ABA295  muted text on dark
+     Deep Pine        #22402F  footer, dark panels
+
+   Contrast (WCAG 2.1, computed):
+     charcoal on white   13.59:1 AAA    white on evergreen   7.28:1 AAA
+     green on white       7.28:1 AAA    white on deep pine  10.67:1 AAA
+     cream on deep pine   8.56:1 AAA    brown on white       5.43:1 AA
+     gold-light on pine   5.21:1 AA     head-shadow on pine  4.52:1 AA
+
+   CAUTION — Eagle Gold is 3.34:1 on the page background and 4.07:1 under
+   charcoal text. That passes AA for large text and UI shapes only. Per the
+   palette's own guidance, gold is used for buttons, badges, rules, and accents,
+   never for paragraphs. Use Wing Brown or Feather Charcoal for body copy.
+
+   Single stylesheet, no preprocessor, no build step.
+   ========================================================================== */
+
+:root {
+  /* Core */
+  --gold: #b57c2a;
+  --charcoal: #2e2825;
+  --white: #f9f7f5;
+  --green: #2f5b44;
+
+  /* Supporting */
+  --gold-light: #d8a75a;
+  --brown: #79614a;
+  --cream: #efddbf;
+  --head-shadow: #aba295;
+  --green-dark: #22402f;
+
+  /* Neutrals used for panels and hairlines (from the palette demo page) */
+  --surface: #ffffff;
+  --border: #e6ded0;
+
+  --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --maxw: 68rem;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 10px 30px rgba(46, 40, 37, 0.08);
+  --shadow-lg: 0 24px 60px rgba(46, 40, 37, 0.22);
+
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--white);
+  color: var(--charcoal);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--charcoal);
+}
+
+h1 {
+  font-size: clamp(2.1rem, 5vw, 3.25rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+p {
+  margin: 0 0 1.1em;
+}
+
+a {
+  color: var(--green);
+}
+
+a:hover {
+  color: var(--green-dark);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.section {
+  padding-block: clamp(2.25rem, 5vw, 3.5rem);
+}
+
+.lede {
+  font-size: 1.15rem;
+  color: var(--brown);
+  max-width: 48rem;
+}
+
+.narrow {
+  max-width: 46rem;
+}
+
+/* ---------- Accessibility ---------- */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--green);
+  color: var(--white);
+  padding: 0.75rem 1rem;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.hidden-field {
+  display: none;
+}
+
+.req {
+  color: var(--green);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--charcoal);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--gold);
+  border-radius: 999px;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  color: var(--charcoal);
+  transform: translateY(-1px);
+}
+
+/* Keep the focus ring on the gold button itself so it always has contrast. */
+.btn:focus-visible {
+  outline-color: var(--charcoal);
+  outline-offset: 0;
+}
+
+/* Solid button for warm backgrounds (Sun Gold), where a gold button on gold
+   would disappear. White on Deep Pine is 10.67:1. */
+.btn-dark {
+  background: var(--green-dark);
+  border-color: var(--green-dark);
+  color: var(--white);
+}
+
+.btn-dark:hover {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--white);
+}
+
+/* Outline button for warm backgrounds (Sun Gold), where green and brown text
+   do not reach 4.5:1. */
+.btn-outline-dark {
+  background: transparent;
+  color: var(--charcoal);
+  border-color: var(--charcoal);
+}
+
+.btn-outline-dark:hover {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--gold-light);
+}
+
+/* Outline button for the dark hero, panels, and footer areas. */
+.btn-ghost {
+  background: transparent;
+  color: var(--white);
+  border-color: rgba(249, 247, 245, 0.7);
+}
+
+.btn-ghost:hover {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--green-dark);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  background: var(--surface);
+  border-bottom: 3px solid var(--cream);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-block: 0.85rem;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--charcoal);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* The eagle mark. Height matches the two-line wordmark beside it. */
+.brand-logo {
+  height: 46px;
+  width: auto;
+  flex: none;
+}
+
+.brand-text {
+  display: grid;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.brand-tag {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/* Below 48rem the nav collapses into a hamburger. A checkbox drives it, so the
+   site keeps its zero-JavaScript guarantee. The input is visually hidden but
+   still focusable; the focus ring is drawn on the label instead. */
+.nav-toggle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav-toggle:focus-visible ~ .nav-toggle-label {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.nav-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem;
+  /* keeps the bars on the same edge as the page content */
+  margin-right: -0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block;
+  width: 24px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--charcoal);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-toggle-bars {
+  position: relative;
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.nav-toggle-bars::before {
+  top: -8px;
+}
+
+.nav-toggle-bars::after {
+  top: 8px;
+}
+
+/* The bars cross into an X while the menu is open. */
+.nav-toggle:checked ~ .nav-toggle-label .nav-toggle-bars {
+  background: transparent;
+}
+
+.nav-toggle:checked ~ .nav-toggle-label .nav-toggle-bars::before {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.nav-toggle:checked ~ .nav-toggle-label .nav-toggle-bars::after {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.site-nav {
+  display: none;
+  flex-basis: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  margin-top: 0.4rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--cream);
+}
+
+.nav-toggle:checked ~ .site-nav {
+  display: flex;
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--charcoal);
+  font-weight: 600;
+  padding: 0.6rem 0;
+  border-bottom: 3px solid transparent;
+}
+
+.site-nav a:hover {
+  color: var(--green);
+}
+
+.site-nav a[aria-current="page"] {
+  border-bottom-color: var(--gold);
+}
+
+@media (min-width: 48rem) {
+  /* Wide screens: the whole nav is always on show, so the toggle goes away
+     entirely (display: none also keeps it out of the tab order). */
+  .nav-toggle,
+  .nav-toggle-label {
+    display: none;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-basis: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.1rem;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .site-nav a {
+    padding: 0.3rem 0;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  background: linear-gradient(160deg, var(--green-dark) 0%, var(--green) 100%);
+  color: var(--white);
+}
+
+.hero-inner {
+  padding-block: clamp(2.75rem, 7vw, 5rem);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 0.75rem;
+}
+
+.hero h1,
+.page-hero h1 {
+  color: var(--white);
+}
+
+.hero h1 {
+  max-width: 24ch;
+}
+
+.hero .lede,
+.page-hero .lede {
+  font-size: 1.2rem;
+  color: var(--cream);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.page-hero {
+  background: var(--green-dark);
+  color: var(--white);
+  padding-block: clamp(2rem, 5vw, 3.25rem);
+}
+
+.page-hero .lede {
+  margin-bottom: 0;
+}
+
+/* ---------- Cards (home page value props) ---------- */
+
+.cards-section {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 5px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.4rem;
+}
+
+.card p {
+  margin-bottom: 0;
+  color: var(--brown);
+}
+
+/* ---------- Curved section dividers ---------- */
+
+.curve {
+  display: block;
+  line-height: 0;
+  color: var(--white);
+}
+
+.curve svg {
+  display: block;
+  width: 100%;
+  height: clamp(2.25rem, 5vw, 4rem);
+}
+
+.curve path {
+  fill: currentColor;
+}
+
+.curve--white { color: var(--white); }
+.curve--gold  { color: var(--gold-light); }
+.curve--pine  { color: var(--green-dark); }
+
+/* ---------- Dog cards ---------- */
+
+.group-heading {
+  border-bottom: 3px solid var(--cream);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.dog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1.5rem;
+}
+
+.dog-grid--single {
+  grid-template-columns: minmax(17rem, 24rem);
+}
+
+.dog-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+/* The photos are square (see 2026-notes/261013-dog-photos), so the card is too.
+   object-fit keeps a non-square photo from distorting if one is ever added. */
+.dog-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--cream);
+}
+
+.dog-photo--placeholder {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(140deg, var(--cream) 0%, var(--border) 100%);
+}
+
+.dog-photo--placeholder span {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--green);
+  opacity: 0.4;
+}
+
+.dog-body {
+  padding: 1.35rem 1.5rem 1.6rem;
+}
+
+.dog-body h3 {
+  margin-bottom: 0.6rem;
+}
+
+.dog-body p {
+  margin-bottom: 0;
+  color: var(--brown);
+}
+
+.dog-breeding {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.8rem;
+}
+
+/* ---------- Full-width panels ----------
+
+   A .panel with no colour modifier (e.g. Pure Bred) has no background of its
+   own and sits on the page background, so it only reads as a separate section
+   because of the waves above and below it. */
+
+.panel {
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+}
+
+.panel-inner {
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+  /* Space between the copy and the wave below it. The curve itself must stay
+     flush with the section's bottom edge so the wave meets the next colour. */
+  padding-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+}
+
+.panel h2 {
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+  margin-bottom: 0.6rem;
+}
+
+.panel p {
+  font-size: 1.15rem;
+  margin-bottom: 0;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.9rem;
+}
+
+.panel--cream {
+  background: var(--cream);
+}
+
+.panel--gold {
+  background: var(--gold-light);
+  color: var(--charcoal);
+}
+
+/* Pure Bred: the photo sits above the copy on narrow screens and to the right
+   of it from 48rem up (row-reverse, since the photo comes first in the markup
+   so that narrow screens get it on top). */
+.panel-inner--photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.panel-photo {
+  width: 100%;
+}
+
+.panel-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Dissolve the photo into the page background instead of ending on a hard
+     rectangle. Two fades intersected, one per axis; on their own the browser
+     would union them and only soften the corners.
+     Asymmetric on purpose: the left fade is the widest because it blends into
+     the copy, while the right is short because Dottie's muzzle runs to the edge
+     of the crop and a wide fade there washes her nose out. */
+  mask-image:
+    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to right, transparent 0, #000 18%, #000 96%, transparent 100%);
+  mask-composite: intersect;
+}
+
+@media (min-width: 48rem) {
+  .panel-inner--photo {
+    flex-direction: row-reverse;
+    justify-content: center;
+    gap: 2.5rem;
+    text-align: left;
+    /* the photo needs more room than the text-only panels */
+    max-width: 56rem;
+  }
+
+  .panel-inner--photo .panel-photo {
+    flex: 0 0 45%;
+  }
+
+  .panel-inner--photo .panel-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .panel-inner--photo .panel-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* The AKC seal in the Responsible panel. The AKC brand guidelines require
+   clear space around the mark, so it is never crowded against the heading.
+   The seal sits above the copy on narrow screens and beside it once there is
+   room for two columns. */
+.panel-seal {
+  display: inline-block;
+  line-height: 0;
+  margin-bottom: 1.1rem;
+}
+
+.panel-seal img {
+  width: 132px;
+  height: auto;
+}
+
+.panel-inner--seal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 48rem) {
+  .panel-inner--seal {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.25rem;
+    text-align: left;
+  }
+
+  .panel-inner--seal .panel-seal {
+    flex: none;
+    margin-bottom: 0;
+  }
+
+  .panel-inner--seal .panel-copy {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+/* ---------- Notice ---------- */
+
+.notice {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2.5rem;
+}
+
+.notice h2 {
+  margin-top: 0;
+}
+
+.notice-actions {
+  margin: 1.5rem 0 0;
+}
+
+/* ---------- Contact ---------- */
+
+/* The form is first in the DOM, so on narrow screens the details land below
+   it; on wide screens the grid moves the details into the left column. */
+.contact-layout {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.contact-form-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+.contact-aside-inner {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.75rem;
+}
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.35rem;
+}
+
+.contact-item {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+}
+
+.contact-icon {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--green);
+}
+
+.contact-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.contact-body h2 {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  margin-bottom: 0.3rem;
+}
+
+.contact-body address {
+  font-style: normal;
+}
+
+.contact-body p {
+  margin-bottom: 0;
+}
+
+@media (min-width: 62rem) {
+  .contact-layout {
+    grid-template-columns: 22rem minmax(0, 1fr);
+  }
+
+  .contact-aside {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Follows the visitor down the form instead of leaving a tall empty column. */
+  .contact-aside-inner {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .contact-form-wrap {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--charcoal);
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--charcoal);
+  background: var(--white);
+  border: 1px solid var(--brown);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.75rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--green);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 1px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  background: var(--green-dark);
+  color: var(--cream);
+  margin-top: 3rem;
+}
+
+/* The home page's last panel ends in a wave the colour of the footer, so the
+   two must meet with no strip of page background between them. */
+body.home .site-footer {
+  margin-top: 0;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 2.5rem 1.5rem;
+}
+
+.footer-inner a {
+  color: var(--gold-light);
+}
+
+.footer-inner a:hover {
+  color: var(--white);
+}
+
+.footer-inner p {
+  margin-bottom: 0.4rem;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--white);
+}
+
+.footer-legal {
+  border-top: 1px solid rgba(239, 221, 191, 0.25);
+  padding-block: 1rem 2rem;
+  font-size: 0.85rem;
+  color: var(--head-shadow);
+}
+
+.footer-legal p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .btn {
+    transition: none;
+  }
+  .nav-toggle-bars,
+  .nav-toggle-bars::before,
+  .nav-toggle-bars::after {
+    transition: none;
+  }
+}

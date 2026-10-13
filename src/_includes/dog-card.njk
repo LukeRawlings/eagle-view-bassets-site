@@ -1,0 +1,12 @@
+<article class="dog-card">
+  {% if dog.image %}
+    <img class="dog-photo" src="{{ dog.image }}" alt="{{ dog.name }}, a basset hound" loading="lazy">
+  {% else %}
+    <div class="dog-photo dog-photo--placeholder" aria-hidden="true"><span>{{ dog.name[0] }}</span></div>
+  {% endif %}
+  <div class="dog-body">
+    <h3>{{ dog.name }}</h3>
+    <p class="dog-breeding">{{ dog.breeding }}</p>
+    <p>{{ dog.blurb }}</p>
+  </div>
+</article>

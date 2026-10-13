@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}{% if title != site.name %} | {{ site.name }}{% endif %}</title>
+  <meta name="description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#22402F">
+  <link rel="stylesheet" href="/css/style.css">
+  <meta property="og:title" content="{{ title }}{% if title != site.name %} | {{ site.name }}{% endif %}">
+  <meta property="og:description" content="{% if description %}{{ description }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+</head>
+<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <img class="brand-logo" src="/assets/logo.svg" alt="" width="683" height="962">
+        <span class="brand-text">
+          <span class="brand-name">{{ site.name }}</span>
+          <span class="brand-tag">{{ site.location }}</span>
+        </span>
+      </a>
+      <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Menu" aria-controls="site-nav">
+      <label class="nav-toggle-label" for="nav-toggle"><span class="nav-toggle-bars" aria-hidden="true"></span></label>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Home</a>
+        <a href="/dogs/" {% if page.url == "/dogs/" %}aria-current="page"{% endif %}>Our Dogs</a>
+        <a href="/puppies/" {% if page.url == "/puppies/" %}aria-current="page"{% endif %}>Puppies</a>
+        <a href="/contact/" {% if page.url == "/contact/" %}aria-current="page"{% endif %}>Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+{{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <p class="footer-brand">{{ site.name }}</p>
+        <p>{{ site.address.street }}<br>{{ site.address.city }}, {{ site.address.state }} {{ site.address.zip }}</p>
+      </div>
+      <div>
+        <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+        {% if site.phone %}<p><a href="tel:{{ site.phoneHref }}">{{ site.phone }}</a></p>{% endif %}
+        <p><a href="/contact/">Send us a message</a></p>
+      </div>
+    </div>
+    <div class="container footer-legal">
+      <p>&copy; {{ "" | currentYear }} {{ site.name }} &mdash; {{ site.location }}</p>
+    </div>
+  </footer>
+
+</body>
+</html>
