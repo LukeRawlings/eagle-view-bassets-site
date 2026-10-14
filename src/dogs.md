@@ -5,7 +5,6 @@ description: "Meet Dottie, Bonnie, Betsie, and Tucker, the Eagle View Bassets fa
 
 <section class="page-hero">
   <div class="container">
-    <p class="eyebrow">The family</p>
     <h1>Our dogs</h1>
     <p class="lede">Here are the amazing dogs that make it all possible. All are socialized to love people and are handled daily because we care about their wellbeing.</p>
   </div>

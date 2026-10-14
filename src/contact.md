@@ -5,7 +5,6 @@ description: "Contact Eagle View Bassets in Columbia, Missouri about basset houn
 
 <section class="page-hero">
   <div class="container">
-    <p class="eyebrow">Say hello</p>
     <h1>Contact us</h1>
     <p class="lede">Are you looking for a puppy to join your family? Do you have questions about our dogs or how we raise pups? Send us a message and we'll be in touch soon.</p>
   </div>

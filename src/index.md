@@ -73,7 +73,6 @@ description: "Basset hound puppies from a small family kennel in Columbia, Misso
       </p>
     </div>
   </div>
-  <div class="curve curve--pine" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" focusable="false"><path d="M0,24 C240,46 480,46 720,26 C960,6 1200,8 1440,32 L1440,60 L0,60 Z"/></svg>
-  </div>
+  <br/>
+  <br/>
 </section>

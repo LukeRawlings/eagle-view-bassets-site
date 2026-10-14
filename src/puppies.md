@@ -5,9 +5,8 @@ description: "Eagle View Bassets has no puppies available right now. Send us a m
 
 <section class="page-hero">
   <div class="container">
-    <p class="eyebrow">Litters</p>
     <h1>Puppies</h1>
-    <p class="lede">We are a small kennel and only breed about once a year, because that is easier on the dog.</p>
+    <p class="lede">Each mom has a litter of adorable pups about once a year. Here is some information about them.</p>
   </div>
 </section>
 
