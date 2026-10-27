@@ -9,26 +9,16 @@ description: "Basset hound puppies from a small family kennel in Columbia, Misso
     <h1>Basset hounds raised nearby in the heartland</h1>
     <p class="lede">We're a small family kennel with a heart for taking care of our dogs.</p>
   </div>
-  <div class="curve curve--white" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" focusable="false"><path d="M0,30 C240,6 480,4 720,24 C960,44 1200,46 1440,22 L1440,60 L0,60 Z"/></svg>
-  </div>
 </section>
 
-<section class="container cards-section">
-  <ul class="cards">
-    <li class="card">
-      <h2>Socialized</h2>
-      <p>All dogs spend time around and love to be with people.</p>
-    </li>
-    <li class="card">
-      <h2>Handled daily</h2>
-      <p>We take everyone for a walk every day after breakfast.</p>
-    </li>
-    <li class="card">
-      <h2>People friendly</h2>
-      <p>We focus on raising puppies to be happy members of their new families.</p>
-    </li>
-  </ul>
+<section class="featured">
+  <figure class="featured-figure">
+    <picture>
+      <source media="(min-width: 48rem)" srcset="/assets/dogs/dottie-banner.jpg">
+      <img class="featured-photo" src="/assets/dogs/dottie-pure-bred.jpg" alt="Dottie, a basset hound, looking to the side" width="1920" height="1637">
+    </picture>
+    <figcaption class="featured-label">Dottie &mdash; 100% European Basset</figcaption>
+  </figure>
 </section>
 
 <section class="panel panel--cream">
@@ -41,24 +31,27 @@ description: "Basset hound puppies from a small family kennel in Columbia, Misso
       </div>
     </div>
   </div>
-  <div class="curve curve--white" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" focusable="false"><path d="M0,24 C240,46 480,46 720,26 C960,6 1200,8 1440,32 L1440,60 L0,60 Z"/></svg>
-  </div>
 </section>
 
-<section class="panel">
-  <div class="container">
-    <div class="panel-inner panel-inner--photo">
-      <div class="panel-photo"><img src="/assets/dogs/dottie-pure-bred.jpg" alt="Dottie, our European basset hound" width="800" height="640" loading="lazy"></div>
-      <div class="panel-copy">
-        <h2>Pure Bred</h2>
-        <p>All our dogs are 100% pure basset hounds. They feature European, Brazilian, and American breed lines.</p>
-        <p class="panel-actions"><a class="btn" href="/dogs/">See the dogs</a></p>
-      </div>
+<section class="panel panel--purebred">
+  <div class="panel-inner panel-inner--photos">
+    <figure class="panel-photo panel-photo--left">
+      <picture>
+        <source media="(min-width: 62rem)" srcset="/assets/dogs/betsie-left.jpg">
+        <img src="/assets/dogs/betsie-strip.jpg" alt="Betsie, a basset hound, standing in the grass with her tongue out" width="1000" height="600" loading="lazy">
+      </picture>
+    </figure>
+    <div class="panel-copy">
+      <h2>Pure Bred</h2>
+      <p>All our dogs are 100% pure basset hounds. They feature European, Brazilian, and American breed lines.</p>
+      <p class="panel-actions"><a class="btn" href="/dogs/">See the dogs</a></p>
     </div>
-  </div>
-  <div class="curve curve--gold" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" focusable="false"><path d="M0,30 C240,6 480,4 720,24 C960,44 1200,46 1440,22 L1440,60 L0,60 Z"/></svg>
+    <figure class="panel-photo panel-photo--right">
+      <picture>
+        <source media="(min-width: 62rem)" srcset="/assets/dogs/bonnie-right.jpg">
+        <img src="/assets/dogs/bonnie-strip.jpg" alt="Bonnie, a basset hound, sitting and looking at the camera" width="1000" height="800" loading="lazy">
+      </picture>
+    </figure>
   </div>
 </section>
 

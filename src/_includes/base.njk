@@ -23,7 +23,7 @@
         <img class="brand-logo" src="/assets/logo.svg" alt="" width="683" height="962">
         <span class="brand-text">
           <span class="brand-name">{{ site.name }}</span>
-          <span class="brand-tag">{{ site.location }}</span>
+          <!-- <span class="brand-tag">{{ site.location }}</span> -->
         </span>
       </a>
       <input class="nav-toggle" type="checkbox" id="nav-toggle" aria-label="Menu" aria-controls="site-nav">
@@ -31,7 +31,10 @@
       <nav class="site-nav" id="site-nav" aria-label="Main">
         <a href="/" {% if page.url == "/" %}aria-current="page"{% endif %}>Home</a>
         <a href="/dogs/" {% if page.url == "/dogs/" %}aria-current="page"{% endif %}>Our Dogs</a>
+        {#- Puppies page hidden for now (2026-10-15): Dave has no puppy photos yet.
+            The page still builds at /puppies/. Delete this comment to restore the link.
         <a href="/puppies/" {% if page.url == "/puppies/" %}aria-current="page"{% endif %}>Puppies</a>
+        #}
         <a href="/contact/" {% if page.url == "/contact/" %}aria-current="page"{% endif %}>Contact</a>
       </nav>
     </div>

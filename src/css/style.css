@@ -50,6 +50,19 @@
   --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --maxw: 68rem;
+  /* Height of a wave. Every wave on the site is this tall: the ones cut out of
+     the sections and panels (see "Wave edges") and the featured band's. */
+  --wave-h: clamp(2.25rem, 5vw, 4rem);
+  /* The two wave paths, as mask images. Each is the path of the SVG curve it
+     replaced, drawn white because a mask reads the alpha channel and white is
+     opaque, in a 60-unit-tall box so --wave-h sizes it.
+     --wave-cut-top is opaque below its curve: it cuts a section's top edge.
+     --wave-cut-bottom is opaque above its curve: it cuts a section's bottom. */
+  --wave-cut-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C240,6 480,4 720,24 C960,44 1200,46 1440,22 L1440,60 L0,60 Z' fill='%23fff'/%3E%3C/svg%3E");
+  --wave-cut-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,24 C240,46 480,46 720,26 C960,6 1200,8 1440,32 L1440,0 L0,0 Z' fill='%23fff'/%3E%3C/svg%3E");
+  /* Widest the featured band's photo gets. Past this the band's own background
+     shows either side of it, as two bars. */
+  --featured-maxw: 48rem;
   --radius: 14px;
   --radius-sm: 8px;
   --shadow: 0 10px 30px rgba(46, 40, 37, 0.08);
@@ -277,7 +290,7 @@ img {
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 700;
   line-height: 1.1;
 }
@@ -428,6 +441,13 @@ img {
   padding-block: clamp(2.75rem, 7vw, 5rem);
 }
 
+/* The featured band tucks up by --wave-h, so the hero needs that height of green
+   below its text for the band to tuck into. It replaces the white wave the hero
+   used to carry. */
+.hero {
+  padding-bottom: var(--wave-h);
+}
+
 .hero h1,
 .page-hero h1 {
   color: var(--white);
@@ -460,60 +480,114 @@ img {
   margin-bottom: 0;
 }
 
-/* ---------- Cards (home page value props) ---------- */
+/* ---------- Featured dog band under the hero ----------
 
-.cards-section {
-  padding-block: clamp(2rem, 4vw, 3rem);
+   Dave's request (2026-10-15, reworked 2026-10-18): the photo takes the place of
+   the three value cards, and it reads as the page background rather than as a
+   card on it. The wave cut in its top edge shows the hero's green through, and
+   its bottom edge meets the Responsible panel flush with no gap.
+
+   The wave is full-bleed at every width. The photo is not: it is capped at
+   --featured-maxw and centred, and the band's own background shows either side of
+   it as two bars. Read left to right that is bar, photo, bar, and the green curve
+   sweeps across all three as one shape, because the mask is on the band and not
+   on the photo.
+
+   Two crops of the same photo, swapped at 48rem by <picture>. Luke made both by
+   hand on 2026-10-18, both 1920x1637, so the swap currently changes nothing. The
+   band has no height of its own: it follows the photo's proportions. Put an
+   aspect-ratio on .featured-photo if the band ever needs to be held to one.
+
+   The wave cut across its top edge is the shared one, in "Wave edges" below. */
+
+.featured {
+  /* Slide the band up under the hero, so the hero's green sits behind the cut in
+     the band's top edge. */
+  margin-top: calc(-1 * var(--wave-h));
+
+  /* The surface the bars either side of the photo are made of. The page colour,
+     so the band reads as part of the page and matches the Pure Bred panel below
+     it. */
+  background: var(--white);
 }
 
-.cards {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1.25rem;
+.featured-figure {
+  position: relative;
+  /* Cap the photo and centre it, so a wide display gets two bars of the band's
+     background instead of a photo taller than the screen. */
+  max-width: var(--featured-maxw);
+  margin: 0 auto;
 }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-top: 5px solid var(--gold);
-  border-radius: var(--radius);
-  padding: 1.5rem;
+.featured-photo {
+  display: block;
+  width: 100%;
+  /* The band is as tall as the photo's own proportions make it. height: auto is
+     what gives the photo that control: without it the width and height
+     attributes on <img> win as presentational hints and fix the height. */
+  height: auto;
+}
+
+/* The label is a plate inside the photo. Cream is the palette's surface colour
+   and cream on charcoal is 10.9:1, so it holds up over any part of the photo. */
+.featured-label {
+  position: absolute;
+  /* left/right 0 with an auto margin centres the pill without a transform, and
+     leaves it the whole photo width to shrink-to-fit inside. left: 50% would
+     halve that and wrap the text on narrow screens. */
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  width: fit-content;
+  bottom: clamp(0.9rem, 3vw, 1.9rem);
+  max-width: calc(100% - 2rem);
+  padding: 0.5rem 1.15rem;
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-display);
+  font-size: clamp(0.85rem, 2.2vw, 1rem);
+  text-align: center;
+  border-radius: 999px;
   box-shadow: var(--shadow);
 }
 
-.card h2 {
-  font-size: 1.3rem;
-  margin-bottom: 0.4rem;
+/* ---------- Wave edges ----------
+
+   A section that meets its neighbour on a curve has that curve cut out of its own
+   edge with mask-image, instead of the section above carrying a strip of SVG at
+   its foot. Each mask is two layers: the wave, and a flat layer covering the rest
+   of the element, so everything is kept except the crescent outside the curve.
+   The flat layer overlaps the wave by 2px, because sized to meet exactly,
+   sub-pixel rounding leaves a 1px line of the neighbouring colour across it.
+   Without mask support every edge is straight and the page still works.
+
+   A section that owns a wave is also lifted above the next one (position:
+   relative and a z-index), so its wave crosses whatever the next section has
+   under it. That is what puts the cream panel's curve across the top of Betsy's
+   photo and the gold panel's across the bottom of Bonnie's: both photos are slid
+   out under the wave by --wave-h. */
+
+.featured,
+.panel--gold {
+  /* Wave across the top edge. The crescent the mask drops is where the section
+     above shows through: the hero's green above the featured band, the page
+     background above the gold panel. */
+  mask-image: var(--wave-cut-top), linear-gradient(#000, #000);
+  mask-size: 100% var(--wave-h), 100% calc(100% - var(--wave-h) + 2px);
+  mask-position: top, bottom;
+  mask-repeat: no-repeat;
+  mask-composite: add;
 }
 
-.card p {
-  margin-bottom: 0;
-  color: var(--brown);
+.panel--cream {
+  /* Wave across the bottom edge: the crescent is where the Pure Bred section's
+     page background shows through, and the photo with it. */
+  mask-image: linear-gradient(#000, #000), var(--wave-cut-bottom);
+  mask-size: 100% calc(100% - var(--wave-h) + 2px), 100% var(--wave-h);
+  mask-position: top, bottom;
+  mask-repeat: no-repeat;
+  mask-composite: add;
 }
-
-/* ---------- Curved section dividers ---------- */
-
-.curve {
-  display: block;
-  line-height: 0;
-  color: var(--white);
-}
-
-.curve svg {
-  display: block;
-  width: 100%;
-  height: clamp(2.25rem, 5vw, 4rem);
-}
-
-.curve path {
-  fill: currentColor;
-}
-
-.curve--white { color: var(--white); }
-.curve--gold  { color: var(--gold-light); }
 
 /* ---------- Dog cards ---------- */
 
@@ -601,8 +675,9 @@ img {
   max-width: 46rem;
   margin-inline: auto;
   text-align: center;
-  /* Space between the copy and the wave below it. The curve itself must stay
-     flush with the section's bottom edge so the wave meets the next colour. */
+  /* Space between the copy and the bottom of the section. A section with a wave
+     cut out of its own bottom edge adds the wave's height back on top of this,
+     because the mask eats it (see .panel--cream). */
   padding-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
 }
 
@@ -624,26 +699,66 @@ img {
   margin-top: 1.9rem;
 }
 
+/* The Responsible panel. Its bottom edge is a wave, and that wave crosses the
+   top of Betsy's photo in the Pure Bred section below, so the panel has to paint
+   above it. The mask (see "Wave edges") is what leaves the photo visible below
+   the curve. */
 .panel--cream {
   background: var(--cream);
+  position: relative;
+  z-index: 1;
 }
 
-.panel--gold {
-  background: var(--gold-light);
-  color: var(--charcoal);
+/* The mask eats --wave-h off the bottom, which is where the .curve strip used to
+   sit, so the copy needs that height back to keep its distance from the wave. */
+.panel--cream .panel-inner {
+  padding-bottom: calc(var(--wave-h) + clamp(1.5rem, 3.5vw, 2.5rem));
 }
 
-/* Pure Bred: the photo sits above the copy on narrow screens and to the right
-   of it from 48rem up (row-reverse, since the photo comes first in the markup
-   so that narrow screens get it on top). */
-.panel-inner--photo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.75rem;
+/* ---------- Pure Bred: the two photos run to the screen edges ----------
+
+   Betsy and Bonnie flank the copy on wide screens; on narrow screens they stack,
+   Betsy above it and Bonnie below, each the full width of the window. The photos
+   come first and last in the markup, so the stacked order falls out of the DOM
+   and the wide layout is a grid.
+
+   Either way they are full-bleed sideways: on a narrow screen each is the whole
+   width of the window, and on a wide one the two sit hard against the left and
+   right edges of the window, capped in width so a large display does not get two
+   photos taller than the screen. There is no .container here on purpose, and no
+   rounding on the photos: they are part of the page, like the featured band.
+
+   Each photo is slid --wave-h out under the panel next to it, so a wave crosses
+   the photo's own edge and that edge ends up hidden behind the panel (see "Wave
+   edges"). Stacked, Betsy hangs up out of the section under the cream panel, and
+   Bonnie's band ends on the bottom of the section, where the gold panel's wave
+   crosses it. Side by side in the wide layout the two share one row and have to
+   be level, so both hang up out of its top edge, and the cream panel's wave
+   crosses the top of both. The row is --wave-h shorter than a photo, so the slide
+   up leaves each photo's bottom edge on the bottom of the row, where the gold
+   panel's wave crosses it.
+
+   The swap between the tall crop and the band is <picture> at 62rem, the same
+   breakpoint as this block. */
+.panel--purebred {
+  /* Betsy is tucked up under the cream panel, so the section gives her nothing
+     above her; the grid gap spaces her from the copy. */
+  padding-top: 0;
+}
+
+.panel-inner--photos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 2.25rem);
+  /* full-bleed: no container, no 46rem cap, nothing under the last photo */
+  max-width: none;
+  padding-bottom: 0;
 }
 
 .panel-photo {
+  margin: 0;
+  /* Fill the grid area rather than shrink to the photo's own size, so the photo
+     always reaches its edge of the window. */
   width: 100%;
 }
 
@@ -651,40 +766,81 @@ img {
   display: block;
   width: 100%;
   height: auto;
-  /* Dissolve the photo into the page background instead of ending on a hard
-     rectangle. Two fades intersected, one per axis; on their own the browser
-     would union them and only soften the corners.
-     Asymmetric on purpose: the left fade is the widest because it blends into
-     the copy, while the right is short because Dottie's muzzle runs to the edge
-     of the crop and a wide fade there washes her nose out. */
-  mask-image:
-    linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to right, transparent 0, #000 18%, #000 96%, transparent 100%);
-  mask-composite: intersect;
+  /* Must agree with the crop in the script: Betsy's band is 5:3 (1000x600).
+     An aspect-ratio here also keeps the box right while the photo loads. */
+  aspect-ratio: 5 / 3;
 }
 
-@media (min-width: 48rem) {
-  .panel-inner--photo {
-    flex-direction: row-reverse;
-    justify-content: center;
-    gap: 2.5rem;
-    text-align: left;
-    /* the photo needs more room than the text-only panels */
-    max-width: 56rem;
+/* Bonnie's band is the taller of the two (5:4, 1000x800). A 5:3 band holds her
+   head with nothing to spare, and the gold panel's wave crosses the bottom of
+   this band, so at 320px wide the curve ran across her muzzle (2026-10-23). The
+   taller crop leaves her head the room the curve takes. */
+.panel-photo--right img {
+  aspect-ratio: 5 / 4;
+}
+
+/* Out under the neighbouring wave. Stacked, the two photos are in different rows,
+   so Betsy hangs up out of the section and Bonnie's band sits on the bottom of it.
+   Side by side they are in one row and both hang up: see the @media below. */
+.panel-photo--left {
+  margin-top: calc(-1 * var(--wave-h));
+}
+
+.panel-copy {
+  /* the copy keeps the container's width and padding, the photos do not */
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 62rem) {
+  .panel-inner--photos {
+    /* Three columns: the copy keeps a readable width and the photos take what is
+       left of the window. They are narrower than the copy on purpose, so the dogs
+       read as asides to it rather than as the main event. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 30rem) minmax(0, 1fr);
+    align-items: center;
   }
 
-  .panel-inner--photo .panel-photo {
-    flex: 0 0 45%;
+  .panel-photo {
+    max-width: 26rem;
   }
 
-  .panel-inner--photo .panel-copy {
-    flex: 1 1 auto;
-    min-width: 0;
+  /* Hold each photo against the edge of the window it belongs to, and hang both
+     off the top of the row so the two are level. Without the slide up on the right
+     photo it sits --wave-h lower than the left one. */
+  .panel-photo--left {
+    justify-self: start;
+    align-self: start;
   }
 
-  .panel-inner--photo .panel-actions {
-    justify-content: flex-start;
+  .panel-photo--right {
+    justify-self: end;
+    align-self: start;
+    margin-top: calc(-1 * var(--wave-h));
   }
+
+  /* the copy column is the container now, so it needs no padding of its own */
+  .panel-copy {
+    padding-inline: 0;
+  }
+
+  .panel-photo img {
+    /* Must agree with the crop in the script: the side photos are 3:4 (540x720). */
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* The Looking for a puppy? panel. Its top edge is a wave and the gold crosses the
+   bottom of Bonnie's photo, so the panel paints above it, and the copy is pushed
+   down past the mask. */
+.panel--gold {
+  background: var(--gold-light);
+  color: var(--charcoal);
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--wave-h));
+  padding-top: calc(var(--wave-h) + clamp(3rem, 7vw, 5.5rem));
 }
 
 /* The AKC seal in the Responsible panel. The AKC brand guidelines require
@@ -879,8 +1035,8 @@ textarea {
   margin-top: 3rem;
 }
 
-/* The home page's last panel ends in a wave the colour of the footer, so the
-   two must meet with no strip of page background between them. */
+/* The home page's gold panel ends the run of waves and meets the footer square,
+   so the two must meet with no strip of page background between them. */
 body.home .site-footer {
   margin-top: 0;
 }
