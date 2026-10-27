@@ -62,7 +62,7 @@ description: "Basset hound puppies from a small family kennel in Columbia, Misso
       <p>We're excited too! Let's talk!</p>
       <p class="panel-actions">
         <a class="btn btn-dark" href="/contact/">Contact</a>
-        <a class="btn btn-outline-dark" href="/puppies/">See puppies</a>
+        <!-- <a class="btn btn-outline-dark" href="/puppies/">See puppies</a> -->
       </p>
     </div>
   </div>
