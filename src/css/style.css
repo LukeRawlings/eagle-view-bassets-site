@@ -60,8 +60,9 @@
      --wave-cut-bottom is opaque above its curve: it cuts a section's bottom. */
   --wave-cut-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,30 C240,6 480,4 720,24 C960,44 1200,46 1440,22 L1440,60 L0,60 Z' fill='%23fff'/%3E%3C/svg%3E");
   --wave-cut-bottom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,24 C240,46 480,46 720,26 C960,6 1200,8 1440,32 L1440,0 L0,0 Z' fill='%23fff'/%3E%3C/svg%3E");
-  /* Widest the featured band's photo gets. Past this the band's own background
-     shows either side of it, as two bars. */
+  /* Widest one of the featured band's two photos gets. The band caps the pair at
+     twice this; past that the band's own background shows either side of them,
+     as two bars. */
   --featured-maxw: 48rem;
   --radius: 14px;
   --radius-sm: 8px;
@@ -482,30 +483,43 @@ img {
 
 /* ---------- Featured dog band under the hero ----------
 
-   Dave's request (2026-10-15, reworked 2026-10-18): the photo takes the place of
-   the three value cards, and it reads as the page background rather than as a
-   card on it. The wave cut in its top edge shows the hero's green through, and
-   its bottom edge meets the Responsible panel flush with no gap.
+   Dave's request (2026-10-15, reworked 2026-10-18 and 2026-11-08): the photo takes
+   the place of the three value cards, and it reads as the page background rather
+   than as a card on it. The wave cut in its top edge shows the hero's green
+   through, and its bottom edge meets the Responsible panel flush with no gap.
 
-   The wave is full-bleed at every width. The photo is not: it is capped at
-   --featured-maxw and centred, and the band's own background shows either side of
-   it as two bars. Read left to right that is bar, photo, bar, and the green curve
-   sweeps across all three as one shape, because the mask is on the band and not
-   on the photo.
+   Two photos of Dottie since 2026-11-08, side by side on a wide screen: her old
+   profile crop (dottie-banner.jpg) and a new crop of her sitting in the grass
+   (dottie-grass.jpg). Below 48rem the band shows the grass photo alone, as a
+   square (dottie-grass-square.jpg), because a second photo there would either
+   push the first one off the screen or make both too small to read.
 
-   Two crops of the same photo, swapped at 48rem by <picture>. Luke made both by
-   hand on 2026-10-18, both 1920x1637, so the swap currently changes nothing. The
-   band has no height of its own: it follows the photo's proportions. Put an
-   aspect-ratio on .featured-photo if the band ever needs to be held to one.
+   The wave is full-bleed at every width. The photos are not: the pair is capped
+   at twice --featured-maxw and centred, and the band's own background shows
+   either side of it as two bars. Read left to right that is bar, pair, bar, and
+   the green curve sweeps across all three as one shape, because the mask is on
+   the band and not on the photos.
 
-   The wave cut across its top edge is the shared one, in "Wave edges" below. */
+   The two photos meet with no gap between them (2026-11-08, Luke's request:
+   "removing the vertical band between the Dottie photos ... I want it to look
+   sleek"). They used to be separated by --featured-gap, up to 1.25rem of the
+   band's own background, which read as a white stripe down the middle of the
+   band. Nothing else moved: the pair is 2 x --featured-maxw wide either way, so
+   each photo is a little wider than it was and the band a little shorter.
+
+   The band has no height of its own: it follows the photos' proportions. Both
+   photos in the pair are the same shape (dottie-banner.jpg is 1920x1637 and
+   dottie-grass.jpg is 1400x1194, within 0.05% of each other), so equal columns
+   make equal heights and the two sit level.
+
+   The wave cut across the top edge is the shared one, in "Wave edges" below. */
 
 .featured {
   /* Slide the band up under the hero, so the hero's green sits behind the cut in
      the band's top edge. */
   margin-top: calc(-1 * var(--wave-h));
 
-  /* The surface the bars either side of the photo are made of. The page colour,
+  /* The surface the bars either side of the photos are made of. The page colour,
      so the band reads as part of the page and matches the Pure Bred panel below
      it. */
   background: var(--white);
@@ -513,28 +527,76 @@ img {
 
 .featured-figure {
   position: relative;
-  /* Cap the photo and centre it, so a wide display gets two bars of the band's
-     background instead of a photo taller than the screen. */
-  max-width: var(--featured-maxw);
+  /* Cap the pair and centre it, so a wide display gets two bars of the band's
+     background instead of photos taller than the screen. */
+  max-width: calc(2 * var(--featured-maxw));
   margin: 0 auto;
 }
 
-.featured-photo {
+/* One column by default: the grass photo alone, full-bleed. The two columns meet
+   with no gap, so the pair reads as one picture split down the middle rather than
+   as two cards. */
+.featured-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* Each photo fills its column and takes its height from its own proportions.
+   height: auto is what gives it that control: without it the width and height
+   attributes on the <img> (or on a <source>, which Chrome copies onto the img)
+   win as presentational hints and fix the height. */
+.featured-shot,
+.featured-shot--grass img {
   display: block;
   width: 100%;
-  /* The band is as tall as the photo's own proportions make it. height: auto is
-     what gives the photo that control: without it the width and height
-     attributes on <img> win as presentational hints and fix the height. */
   height: auto;
 }
 
-/* The label is a plate inside the photo. Cream is the palette's surface colour
-   and cream on charcoal is 10.9:1, so it holds up over any part of the photo. */
+/* The profile crop is the wide-screen partner only. It carries loading="lazy" in
+   index.md, so a narrow screen does not download a photo it will not show: a
+   lazy image that is display: none is never in the viewport and is not fetched. */
+.featured-shot--profile {
+  display: none;
+  /* Must agree with the file: dottie-banner.jpg is 1920x1637. */
+  aspect-ratio: 1920 / 1637;
+}
+
+.featured-shot--grass img {
+  /* Must agree with the crop in make-featured-photos.codex.py: the square is
+     1000x1000. */
+  aspect-ratio: 1 / 1;
+}
+
+@media (min-width: 48rem) {
+  /* Two columns: the profile crop and the grass crop, level. */
+  .featured-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-shot--profile {
+    display: block;
+  }
+
+  .featured-shot--grass img {
+    /* Must agree with the crop in make-featured-photos.codex.py: the wide crop
+       is 1400x1194. */
+    aspect-ratio: 1400 / 1194;
+  }
+}
+
+/* The label is a plate inside the band, centred over the pair on a wide screen and
+   over the single photo on a narrow one. It sits across the seam where the two
+   photos meet, which is why it is centred on the band rather than on one photo.
+   Cream alone stopped being enough once the band held two photos: the plate
+   crosses the pale grass and the pale wall behind Dottie, where a cream plate
+   with no outline has no edge (2026-11-08). The 2px ink outline is the edge you
+   see there; the cream fill is the edge you see over the dark parts of the
+   photos. Cream on charcoal is 10.9:1 either way. */
 .featured-label {
   position: absolute;
   /* left/right 0 with an auto margin centres the pill without a transform, and
-     leaves it the whole photo width to shrink-to-fit inside. left: 50% would
-     halve that and wrap the text on narrow screens. */
+     leaves it the whole width to shrink-to-fit inside. left: 50% would halve
+     that and wrap the text on narrow screens. */
   left: 0;
   right: 0;
   margin-inline: auto;
@@ -544,6 +606,7 @@ img {
   padding: 0.5rem 1.15rem;
   background: var(--cream);
   color: var(--charcoal);
+  border: 2px solid var(--charcoal);
   font-family: var(--font-display);
   font-size: clamp(0.85rem, 2.2vw, 1rem);
   text-align: center;

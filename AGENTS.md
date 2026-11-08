@@ -113,10 +113,11 @@ The featured dog band stands where three value cards used to (Dave asked for the
 swap on 2026-10-15). It reads as the page background, not as a card on it:
 
 - The **band** is full-bleed at every width and its bottom edge meets the
-  *Responsible* panel flush, with no gap. The **photo** inside it is not: it is
-  capped at `--featured-maxw` (48rem) and centred, so a wide display gets two bars
-  of the band's own background either side of the dog instead of a photo taller
-  than the screen. Read left to right: bar, photo, bar.
+  *Responsible* panel flush, with no gap. The **photos** inside it are not: the
+  pair is capped at twice `--featured-maxw` (48rem) plus `--featured-gap` and
+  centred, so a wide display gets two bars of the band's own background either
+  side of the dogs instead of photos taller than the screen. Read left to right:
+  bar, pair, bar.
 - The wave is the hero's green showing through a **wave cut in the top of the
   band** (the shared one, above). It is cut on the band rather than on the photo
   so the wave stays full-bleed however narrow the photo gets: the green curve
@@ -125,19 +126,37 @@ swap on 2026-10-15). It reads as the page background, not as a card on it:
   `margin-top: calc(-1 * var(--wave-h))`, and `.hero` carries
   `padding-bottom: var(--wave-h)` in place of the wave it used to have, so its
   green reaches down behind the cut.
-- Two crops of the same photo, swapped at 48rem by `<picture>`. Luke re-cropped
-  both by hand on 2026-10-18 and both are now 1920x1637, so the swap changes
-  nothing today and the cap is what keeps the band in check. A wide 2.6:1 banner
-  crop is the open question; the earlier one is still in the tree as
-  `dottie-banner-1.jpg` (1920x730), and at the 48rem cap it would make the band
-  295px tall instead of 655px.
-- The label is a cream pill inside the photo, near its bottom. It names the dog,
-  so the breeding line reads as a fact about her rather than about the kennel.
+- **Two photos of Dottie since 2026-11-08.** `.featured-pair` is one column by
+  default and two at 48rem. The profile crop (`dottie-banner.jpg`, 1920x1637,
+  Luke's hand crop of 2026-10-18) is the wide-screen partner only; the grass crop
+  (`dottie-grass.jpg`, 1400x1194) is the second photo there and the only photo
+  below 48rem, where it is a square (`dottie-grass-square.jpg`, 1000x1000). Both
+  crops come from `assets/dogs/dottie-5.jpg` and are made by
+  `2026-notes/261108-featured-photos/make-featured-photos.codex.py`.
+- The two wide crops are the same shape within 0.05%, so equal columns make equal
+  heights and the pair sits level. The band has no height of its own: it follows
+  the photos' proportions.
+- The profile crop is hidden below 48rem with `display: none` and carries
+  `loading="lazy"` in `index.md`. That is deliberate and it is what stops a narrow
+  screen downloading a photo it will not show: a lazy image that is `display: none`
+  is never in the viewport, so Chrome never fetches it. Verified 2026-11-08.
+  Making it eager would put 457 KB on every phone.
+- The label is a pill inside the band, near the bottom, centred over the pair on a
+  wide screen and over the single photo on a narrow one. It names the dog, so the
+  breeding line reads as a fact about her rather than about the kennel. It is
+  cream with a 2px ink outline: the plate is wider than the gap between the two
+  photos, so its middle crosses the light stripe of the band's own background,
+  where a cream plate with no outline has no edge (2026-11-08).
 
-**Trap:** `.featured-photo` needs `height: auto`. Without it the `height`
-attribute on `<img>` (or on a `<source>`, which Chrome copies onto the img) wins
-as a presentational hint, and a fixed height plus `object-fit: cover` silently
-crops the sides off the crop.
+**Trap:** the photos need `height: auto`. Without it the `height` attribute on
+`<img>` (or on a `<source>`, which Chrome copies onto the img) wins as a
+presentational hint, and a fixed height plus `object-fit: cover` silently crops
+the sides off the crop.
+
+**Trap:** the crops, the `aspect-ratio` values in `style.css`, the `<source
+media>` in `index.md` and the `@media` in `style.css` all name 48rem, 1400x1194,
+1000x1000 and 1920x1637. Change one and the photos change shape at the wrong
+width, or the pair stops being level. `make-featured-photos.codex.py` says so too.
 
 **Trap:** the two `mask-image` layers must overlap by 2px. Sized to meet exactly,
 sub-pixel rounding leaves a 1px line of the neighbouring colour across the band.
@@ -248,12 +267,13 @@ top of the dog's head. Crop it on purpose first.
 phone originals in the workshop's `assets/dogs/`. It records the crop box and
 the reason for each one. Re-run it to regenerate all the photos.
 
-The two home-page sets are the odd ones out, and neither is square.
-`dottie-banner.jpg` and `dottie-pure-bred.jpg` are the featured band's crops, both
-1920x1637 at the moment (see above). `betsie-left.jpg` and `bonnie-right.jpg` (3:4,
-540x720) are the *Pure Bred* section's side photos, and its stacked bands are
-`betsie-strip.jpg` (5:3, 1000x600) and `bonnie-strip.jpg` (5:4, 1000x800). Those four come from
-`betsy-1` and `bonnie-2`, cut by
+The home-page sets are the odd ones out, and none of them is square.
+`dottie-banner.jpg` (1920x1637) is the featured band's wide-screen profile crop;
+`dottie-grass.jpg` (1400x1194) and `dottie-grass-square.jpg` (1000x1000) are its
+grass crops (see above). `betsie-left.jpg` and `bonnie-right.jpg` (3:4, 540x720)
+are the *Pure Bred* section's side photos, and its stacked bands are
+`betsie-strip.jpg` (5:3, 1000x600) and `bonnie-strip.jpg` (5:4, 1000x800). Those
+four come from `betsy-1` and `bonnie-2`, cut by
 `2026-notes/261019-pure-bred-photos/make-pure-bred-photos.codex.py`.
 
 **Trap:** the `aspect-ratio` in the CSS and the crop box in the script must agree,
@@ -264,14 +284,22 @@ the CSS comment names the script.
 (see above). `betsie-left.jpg` was re-cut on 2026-10-19 for that reason; the
 window moved 50px up the original to leave 13% of grass above Betsy's skull.
 
-The originals carry no EXIF and no GPS data. Neither do the crops. The dog
-photos carry `loading="lazy"`. The featured band under the hero is the exception:
-it sits near the top of the page, so it loads eagerly and carries no `loading`
-attribute. The photos are the heaviest thing on the site: about 2.1 MB across the
-ten crops the pages use, of which the featured band's two 457 KB copies of the
-same picture are the largest. Two crops nothing uses, `dottie-banner-1.jpg` and
-`dottie-pure-bred-1.jpg`, still sit in `src/assets/dogs/` and are still published;
-they are candidates for deletion once the wide crop question is settled.
+The originals carry no EXIF and no GPS data. Neither do the crops. The dog photos
+carry `loading="lazy"`, and so does the featured band's profile crop, for the
+reason given above. The photos are the heaviest thing on the site: about 2.4 MB
+across the twelve files the pages use.
+
+`dottie-pure-bred.jpg` was the featured band's narrow crop until 2026-11-08. It was
+the same picture in the same 1920x1637 window as `dottie-banner.jpg` — the two
+files differed by at most 5 levels per channel, which is JPEG noise — so it came
+out of `src/` when the narrow slot went to the grass crop.
+`2026-notes/261013-dog-photos/make-dog-photos.codex.py` still writes it; that
+script is a record of 2026-10-13, and re-running it would put the file back.
+
+**Watch:** the passthrough copy takes the whole of `src/assets/dogs/`, so any
+JPEG dropped in there is published whether a page uses it or not. A phone
+original left in the directory is megabytes of dead weight on the live site.
+Sources belong in the workshop's `assets/dogs/`.
 
 ## Logo and favicon
 

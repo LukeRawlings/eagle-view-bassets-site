@@ -13,10 +13,13 @@ description: "Basset hound puppies from a small family kennel in Columbia, Misso
 
 <section class="featured">
   <figure class="featured-figure">
-    <picture>
-      <source media="(min-width: 48rem)" srcset="/assets/dogs/dottie-banner.jpg">
-      <img class="featured-photo" src="/assets/dogs/dottie-pure-bred.jpg" alt="Dottie, a basset hound, looking to the side" width="1920" height="1637">
-    </picture>
+    <div class="featured-pair">
+      <img class="featured-shot featured-shot--profile" src="/assets/dogs/dottie-banner.jpg" alt="Dottie, a basset hound, sitting in profile and looking to the side" width="1920" height="1637" loading="lazy">
+      <picture class="featured-shot featured-shot--grass">
+        <source media="(min-width: 48rem)" srcset="/assets/dogs/dottie-grass.jpg" width="1400" height="1194">
+        <img src="/assets/dogs/dottie-grass-square.jpg" alt="Dottie, a basset hound, sitting in the grass and looking at the camera" width="1000" height="1000">
+      </picture>
+    </div>
     <figcaption class="featured-label">Dottie &mdash; 100% European Basset</figcaption>
   </figure>
 </section>
